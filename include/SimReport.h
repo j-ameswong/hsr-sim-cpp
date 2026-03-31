@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include "Action.h"
 
 struct AVChange {
     std::string characterName;

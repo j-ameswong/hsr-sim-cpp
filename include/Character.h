@@ -5,7 +5,7 @@
 struct Equipment {
     bool vonwacq = false;
     bool eagle = false;
-    bool hasDDD = false;
+    bool ddd = false;
     int dddLevel = 1;
 };
 

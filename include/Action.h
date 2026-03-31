@@ -1,6 +1,6 @@
 #include <string>
 
-enum class ActionType { basicAttack, Skill, Ultimate };
+enum class ActionType { BasicAtk, Skill, Ultimate };
 
 struct Action {
     std::string name;
