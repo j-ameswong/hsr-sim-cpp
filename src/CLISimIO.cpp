@@ -1,5 +1,6 @@
 #include "../include/CLISimIO.h"
 #include "iostream"
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -9,19 +10,62 @@ std::vector<std::shared_ptr<Character>> CLISimIO::promptCharacters() {
             + std::string(": ");
     };
 
-    std::vector<std::string> responses;
-
-    std::vector<std::string> params = {"name", "speed", "equipment"};
     std::string input;
-    for (int i = 0; i < params.size(); i++) {
-        std::cout << prompt(params[i]);
-        std::cin >> input; 
 
-        responses.push_back(input);
+    std::string name;
+    std::cout << prompt("name");
+    std::cin >> name; 
+
+    float speed;
+    std::cout << prompt("speed");
+    std::cin >> input; 
+    speed = std::stof(input);
+
+    Equipment equipment;
+    std::cout << prompt("vonwacq/eagle/ddd (yn/yn/yn)");
+    std::cin >> input;
+
+    std::vector<bool> equips;
+    std::string remaining = input;
+    while (equips.size() < 3) {
+        std::string token;
+        auto pos = remaining.find('/');
+        if (pos != std::string::npos) {
+            token = remaining.substr(0, pos);
+            remaining = remaining.substr(pos + 1);
+        } else {
+            token = remaining;
+            remaining = "";
+        }
+        if (token == "y" || token == "n") {
+            equips.push_back(token == "y");
+        } else {
+            break;
+        }
     }
 
-    std::cout << responses[0];
-    return {};
+    if (equips.size() == 3) {
+        equipment.vonwacq = equips[0];
+        equipment.eagle = equips[1];
+        equipment.ddd = equips[2];
+    }
+
+    if (equipment.ddd) {
+        std::cout << prompt("DDD superimpose level (1-5)");
+        std::cin >> input;
+        equipment.dddLevel = std::stoi(input);
+    }
+
+    Character character; 
+    character.name = name;
+    character.speed = speed;
+    character.equipment = equipment;
+
+    std::vector<std::shared_ptr<Character>> characters;
+    characters.push_back(std::make_shared<Character>(character));
+
+    std::cout << character.summary();
+    return characters;
 }
 
 SimConfig CLISimIO::promptConfig() {
