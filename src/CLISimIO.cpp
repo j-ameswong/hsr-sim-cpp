@@ -4,11 +4,14 @@
 #include <string>
 #include <vector>
 
-std::vector<std::shared_ptr<Character>> CLISimIO::promptCharacters() {
+namespace {
     auto prompt = [](std::string param) {
-        return std::string("Input character ") + param
+        return std::string("Input ") + param
             + std::string(": ");
     };
+}
+
+std::vector<std::shared_ptr<Character>> CLISimIO::promptCharacters() {
 
     std::string input;
 
@@ -69,8 +72,20 @@ std::vector<std::shared_ptr<Character>> CLISimIO::promptCharacters() {
 }
 
 SimConfig CLISimIO::promptConfig() {
-    // TODO
-    return {};
+    std::string input;
+
+    std::cout << prompt("target AV");
+    std::cin >> input;
+    float av = std::stof(input);
+
+    std::cout << prompt("is first wave (y/n)");
+    std::cin >> input;
+    bool isFirstWave = input == "y";
+    
+    SimConfig simConfig;
+    simConfig.avLimit = av;
+    simConfig.isFirstWave = isFirstWave;
+    return simConfig;
 }
 
 std::vector<ActionPrompt> CLISimIO::promptWindow(

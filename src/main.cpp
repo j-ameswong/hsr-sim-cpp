@@ -4,5 +4,6 @@ int main (int argc, char *argv[]) {
     CLISimIO cliSimIo;
 
     cliSimIo.promptCharacters();
+    cliSimIo.promptConfig();
     return 0;
 }

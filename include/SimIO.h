@@ -18,8 +18,8 @@ struct ActionPrompt {
 };
 
 struct SimConfig {
-    int wave;
-    float avLimit;
+    bool isFirstWave = true;
+    float avLimit = 150;
 };
 
 class SimIO {
